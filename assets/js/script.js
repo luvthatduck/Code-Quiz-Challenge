@@ -24,8 +24,8 @@ var answerButtonEl = document.getElementById('answer-buttons');
 
 var timerEl = document.getElementById('timer');
 var timeLeft = 60;
-
-
+var timeInterval;
+var score = 0
 
 startButton.addEventListener('click', startGame);
 startButton.addEventListener('click', countdown);
@@ -49,7 +49,7 @@ function startGame() {
 function countdown() {
   // var timeLeft = 60;
 
-  var timeInterval = setInterval(function () {
+ timeInterval = setInterval(function () {
     if (timeLeft > 1) {
       timerEl.textContent = timeLeft + ' seconds remaining';
       timeLeft--;
@@ -65,12 +65,12 @@ function countdown() {
 }
 
 
-function pointLoss() {
-  var lostPoint = timeLeft -5
-  if (questions.correct.answers === false) {
-    
-  }
-}
+// function pointLoss() {
+//   var lostPoint = timeLeft - 5
+//   if (questions.correct.answers === false) {
+
+//   }
+// }
 
 
 
@@ -95,11 +95,19 @@ function showQuestion(question) {
 
 }
 
+
 // answer a question 
 function selectAnswer(event) {
+
   var selectedAnswer = event.target
   var correct = selectedAnswer.dataset.correct
-  setStatusClass(document.body, correct)
+
+  if (!correct) {
+    timeLeft = timeLeft - 5;
+  }
+
+
+  setStatusClass(document.body, correct);
   Array.from(answerButtonEl.children).forEach(button => {
     setStatusClass(button, button.dataset.correct)
   })
@@ -108,7 +116,8 @@ function selectAnswer(event) {
   } else {
     startButton.innerText = ' Your score is ' + timeLeft;
     startButton.classList.remove('hide');
-
+    console.log("hello world");
+    clearInterval(timeInterval);
   }
 }
 
@@ -118,8 +127,8 @@ function setStatusClass(element, correct) {
     element.classList.add('correct')
 
   } else {
-    element.classList.add('wrong',);
-    
+    element.classList.add('wrong');
+
   }
 
 }
