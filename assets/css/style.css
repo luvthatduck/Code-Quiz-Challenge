@@ -73,7 +73,7 @@ body.wrong {
   border-color: red;
 }
 
-.start-btn, .next-btn {
+.start-btn, .next-btn, .result-btn {
   font-size: 1.5rem;
   font-weight: bold;
   padding: 10px 20px;
@@ -96,3 +96,43 @@ body.wrong {
 }
 
 .game-info {}
+
+input {
+  background-color: #f1f3f4;
+  border-radius: 2px;
+  border-width: 0;
+  color: #5f6368;
+  font-size: 1em;
+  height: 45px;
+  line-height: 20px;
+  margin: 0;
+  margin-top: 10px;
+  max-width: 100%;
+  padding: 8px 8px 8px 8px;
+  transition-delay: 0s, 0s;
+  transition-duration: 0.2s, 0.2s;
+  transition-property: background-color, color;
+  transition-timing-function: ease, ease;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.listscores {
+  background-color: #fff;
+  border: 1px solid #eceff1;
+  border-radius: 8px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px 0,
+    #3c404326 0 1px 3px 1px;
+  margin-top: 80px;
+  padding: 20px;
+  width: 46%;
+  overflow: hidden;
+  position: relative;
+
+}
+
+.listscores::after {
+  content: ' ';
+  display: flex;
+  clear: both;
+}

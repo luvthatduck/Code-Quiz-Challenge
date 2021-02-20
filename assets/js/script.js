@@ -17,6 +17,7 @@
 
 var startButton = document.getElementById('start-btn');
 var nextButton = document.getElementById('next-btn');
+var resultButton = document.getElementById('result-btn');
 var questionContainerEl = document.getElementById('question-container');
 
 var questionEl = document.getElementById('question');
@@ -26,6 +27,9 @@ var timerEl = document.getElementById('timer');
 var timeLeft = 60;
 var timeInterval;
 var score = 0
+
+var initialsInput = document.querySelector('#initials');
+var playerScoresSpan = document.querySelector('#player-scores');
 
 startButton.addEventListener('click', startGame);
 startButton.addEventListener('click', countdown);
@@ -49,7 +53,7 @@ function startGame() {
 function countdown() {
   // var timeLeft = 60;
 
- timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     if (timeLeft > 1) {
       timerEl.textContent = timeLeft + ' seconds remaining';
       timeLeft--;
@@ -63,14 +67,6 @@ function countdown() {
   }, 1000);
 
 }
-
-
-// function pointLoss() {
-//   var lostPoint = timeLeft - 5
-//   if (questions.correct.answers === false) {
-
-//   }
-// }
 
 
 
@@ -105,6 +101,9 @@ function selectAnswer(event) {
   if (!correct) {
     timeLeft = timeLeft - 5;
   }
+  else {
+    score = score + 10;
+  }
 
 
   setStatusClass(document.body, correct);
@@ -114,11 +113,12 @@ function selectAnswer(event) {
   if (shuffledQuestions.length > currentQuestions + 1) {
     nextButton.classList.remove('hide')
   } else {
-    startButton.innerText = ' Your score is ' + timeLeft;
-    startButton.classList.remove('hide');
-    console.log("hello world");
+    resultButton.innerText = ' Your score is ' + score;
+    resultButton.classList.remove('hide');
     clearInterval(timeInterval);
+    // renderLastRegistered()
   }
+
 }
 
 function setStatusClass(element, correct) {
@@ -145,6 +145,56 @@ function resetQuestions() {
       (answerButtonEl.firstChild)
   }
 }
+
+function renderLastRegistered() {
+  // TODO: Retrieve the last scores from localStorage
+  let lastInitials = localStorage.getItem('initials');
+  let lastScore = localStorage.getItem('score');
+  // TODO: If they are null, return early from this function
+  if (!initials || !score) {
+    return false;
+  }
+  initialsInput.textContent = lastInitials;
+  playerScoreSpan.textContent = lastScore;
+  
+}
+
+// renderLastRegistered();
+
+function displayMessage(type, message) {
+  // msgDiv.textContent = message;
+  // msgDiv.setAttribute('class', type);
+}
+
+resultButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  // var howdy = { hi: 'hello'}
+  // localStorage.setItem('yowdy', JSON.stringify(howdy))
+  // console.log(document.querySelector('#initials'))
+  var initials = document.querySelector('#initials').value;
+  // var score = document.querySelector('#scores').value;
+
+  if (initials === '') {
+    displayMessage('error', ' Entry cannot be blank');
+  } else {
+    displayMessage('success', 'Registered successfully');
+
+    // TODO: Save  to localStorage
+    localStorage.setItem('initials', initials);
+    localStorage.setItem('score', score);
+
+    // TODO: Render the last registered email and password
+    renderLastRegistered()
+  }
+});
+// var oogyboogy = localStorage.getItem("yowdy")
+// console.log( JSON.parse(oogyboogy))
+
+// var woody = JSON.parse(localStorage.getItem("dowdy"))
+// console.log (woody.hi)
+
+// Retrieve last scores from localstorage
+
 
 // Q & A array 
 var questions = [
@@ -194,58 +244,3 @@ var questions = [
     ]
   },
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var body = document.body;
-// var quizBorder = document.getElementById('container')
-
-// Heading h1 & h2
-
-
-//TODO: Add a centered bordered section to hold quiz in 
-// quizBorder.setAttribute('style','margin:auto; width:50%; text-align:center; border: 5px solid lawngreen;');
-
-
-
-
-// body.appendChild(quizBorder);
-// quizBorder.appendChild(quizText);
