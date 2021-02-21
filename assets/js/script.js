@@ -27,6 +27,7 @@ var timerEl = document.getElementById('timer');
 var timeLeft = 60;
 var timeInterval;
 var score = 0
+var highscore = localStorage.getItem("highscore");
 
 var initialsInput = document.querySelector('#initials');
 var playerScoresSpan = document.querySelector('#player-scores');
@@ -116,7 +117,8 @@ function selectAnswer(event) {
     resultButton.innerText = ' Your score is ' + score;
     resultButton.classList.remove('hide');
     clearInterval(timeInterval);
-    // renderLastRegistered()
+    alert
+    renderLastRegistered()
   }
 
 }
@@ -151,50 +153,66 @@ function renderLastRegistered() {
   let lastInitials = localStorage.getItem('initials');
   let lastScore = localStorage.getItem('score');
   // TODO: If they are null, return early from this function
-  if (!initials || !score) {
-    return false;
+  // if (!initials || !score) {
+  //   return false;
+  // }
+
+  if (highscore !== null) {
+    if (score > highscore) {
+      localStorage.setItem("highscore", score);
+    }
   }
-  initialsInput.textContent = lastInitials;
-  playerScoreSpan.textContent = lastScore;
-  
+  else {
+    localStorage.setItem("highscore", score);
+  }
+  function displayMessage() {
+    initialsInput.textContent = lastInitials;
+    playerScoresSpan.textContent = lastScore;
+  }
 }
 
 // renderLastRegistered();
 
-function displayMessage(type, message) {
-  // msgDiv.textContent = message;
-  // msgDiv.setAttribute('class', type);
+
+// initialsInput.textContent = lastInitials;
+// playerScoresSpan.textContent = lastScore;
+
+// }
+
+var listScores = function (scores) {
+  var initials = document.querySelector('#initials').value;
+
+  localStorage.setItem('initials', initials);
+  localStorage.setItem('score', score);
+console.log(initials)
+  renderLastRegistered()
 }
 
-resultButton.addEventListener('click', function (event) {
-  event.preventDefault();
-  // var howdy = { hi: 'hello'}
-  // localStorage.setItem('yowdy', JSON.stringify(howdy))
-  // console.log(document.querySelector('#initials'))
-  var initials = document.querySelector('#initials').value;
-  // var score = document.querySelector('#scores').value;
 
-  if (initials === '') {
-    displayMessage('error', ' Entry cannot be blank');
-  } else {
-    displayMessage('success', 'Registered successfully');
 
-    // TODO: Save  to localStorage
-    localStorage.setItem('initials', initials);
-    localStorage.setItem('score', score);
+// resultButton.addEventListener('click', function (event) {
+//   event.preventDefault();
+// var howdy = { hi: 'hello'}
+// localStorage.setItem('yowdy', JSON.stringify(howdy))
+// console.log(document.querySelector('#initials'))
 
-    // TODO: Render the last registered email and password
-    renderLastRegistered()
-  }
-});
+// var score = document.querySelector('#scores').value;
+
+// if (initials === '') {
+//   displayMessage('error', ' Entry cannot be blank');
+// } else {
+//   displayMessage('success', 'Registered successfully');
+
+// TODO: Save  to localStorage
+
+// TODO: Render the last registered email and password
+
+// });
 // var oogyboogy = localStorage.getItem("yowdy")
 // console.log( JSON.parse(oogyboogy))
 
 // var woody = JSON.parse(localStorage.getItem("dowdy"))
 // console.log (woody.hi)
-
-// Retrieve last scores from localstorage
-
 
 // Q & A array 
 var questions = [
