@@ -1,20 +1,4 @@
 
-// var h1El = document.createElement('h1');
-// var h2EL = document.createElement('h2');
-// var header = document.createElement('header');
-// h1El.textContent = "Welcome to Quizzled! ";
-// h1El.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
-// h2EL.textContent = "Click START to play";
-// h2EL.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
-// header.appendChild(h1El);
-// header.appendChild(h2EL);
-
-
-// var quizText = document.createElement('h2');
-// quizText.textContent = "Quiz Goes in here";
-
-
-
 var startButton = document.getElementById('start-btn');
 var nextButton = document.getElementById('next-btn');
 var resultButton = document.getElementById('result-btn');
@@ -28,9 +12,10 @@ var timeLeft = 60;
 var timeInterval;
 var score = 0
 var highscore = localStorage.getItem("highscore");
+var correctSound = document.getElementById("correct-sound");
+var wrongSound = document.getElementById("wrong-sound");
 
-var initialsInput = document.querySelector('#initials');
-var playerScoresSpan = document.querySelector('#player-scores');
+var initialsInputSpan = document.querySelector('#userinitials');
 
 startButton.addEventListener('click', startGame);
 startButton.addEventListener('click', countdown);
@@ -52,18 +37,18 @@ function startGame() {
 
 //Timer count down from 60 
 function countdown() {
-  // var timeLeft = 60;
-
   timeInterval = setInterval(function () {
     if (timeLeft > 1) {
       timerEl.textContent = timeLeft + ' seconds remaining';
       timeLeft--;
-      // } else if (timeLeft === 1) {
-      //   timerEl.textContent = timeLeft + ' second remaining ';
+    } else if (timeLeft === 1) {
+      timerEl.textContent = timeLeft + ' second remaining ';
     } else {
       timerEl.textContent = '';
       clearInterval(timeInterval)
+      listScores()
     }
+
 
   }, 1000);
 
@@ -101,9 +86,11 @@ function selectAnswer(event) {
 
   if (!correct) {
     timeLeft = timeLeft - 5;
+    wrongSound.play()
   }
   else {
     score = score + 10;
+    correctSound.play()
   }
 
 
@@ -117,11 +104,21 @@ function selectAnswer(event) {
     resultButton.innerText = ' Your score is ' + score;
     resultButton.classList.remove('hide');
     clearInterval(timeInterval);
-    alert
-    renderLastRegistered()
-  }
+    initialsInputSpan.classList.remove('hide');
+    // listScores()
 
+  }
 }
+
+initialsInputSpan.addEventListener('click', function (event) {
+  var initialInput = document.querySelector("#userinitials").value;
+
+
+  localStorage.setItem('initials', initialInput);
+  localStorage.setItem('score', score);
+  renderLastRegistered()
+});
+
 
 function setStatusClass(element, correct) {
   clearStatusClass(element)
@@ -152,67 +149,31 @@ function renderLastRegistered() {
   // TODO: Retrieve the last scores from localStorage
   let lastInitials = localStorage.getItem('initials');
   let lastScore = localStorage.getItem('score');
-  // TODO: If they are null, return early from this function
-  // if (!initials || !score) {
-  //   return false;
-  // }
+  var highscores = document.getElementById("highscores");
 
-  if (highscore !== null) {
-    if (score > highscore) {
-      localStorage.setItem("highscore", score);
-    }
+  // highscores.textContent = lastInitials + "  " + lastScore
+
+  if (score) {
+    i= 0; i >= lastScore 
+    highscores.textContent = lastInitials + "  " + lastScore
   }
-  else {
-    localStorage.setItem("highscore", score);
-  }
-  function displayMessage() {
-    initialsInput.textContent = lastInitials;
-    playerScoresSpan.textContent = lastScore;
-  }
+ 
+
+
+  var node = document.createElement("LI")
+  var textnode = document.createTextNode(lastInitials + "  " + lastScore)
+
+  node.appendChild(textnode);
+ 
+  document.getElementById("highscores").appendChild
+
+  playerScores.push("highscores");
+  hsLen = playerScores.length;
+
 }
 
-// renderLastRegistered();
+playerScores = []
 
-
-// initialsInput.textContent = lastInitials;
-// playerScoresSpan.textContent = lastScore;
-
-// }
-
-var listScores = function (scores) {
-  var initials = document.querySelector('#initials').value;
-
-  localStorage.setItem('initials', initials);
-  localStorage.setItem('score', score);
-console.log(initials)
-  renderLastRegistered()
-}
-
-
-
-// resultButton.addEventListener('click', function (event) {
-//   event.preventDefault();
-// var howdy = { hi: 'hello'}
-// localStorage.setItem('yowdy', JSON.stringify(howdy))
-// console.log(document.querySelector('#initials'))
-
-// var score = document.querySelector('#scores').value;
-
-// if (initials === '') {
-//   displayMessage('error', ' Entry cannot be blank');
-// } else {
-//   displayMessage('success', 'Registered successfully');
-
-// TODO: Save  to localStorage
-
-// TODO: Render the last registered email and password
-
-// });
-// var oogyboogy = localStorage.getItem("yowdy")
-// console.log( JSON.parse(oogyboogy))
-
-// var woody = JSON.parse(localStorage.getItem("dowdy"))
-// console.log (woody.hi)
 
 // Q & A array 
 var questions = [
