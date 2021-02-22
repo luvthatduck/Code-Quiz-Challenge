@@ -10,6 +10,6 @@ This challenge required me to to build a timed coding quiz with multiple-choice 
 * Created responsive layout for various viewpoints.
 
 
-![screenshot of deployed site](https://photos.app.goo.gl/1uYPa9SzwYq5ZwMN9)
+[screenshot of deployed site](https://photos.app.goo.gl/1uYPa9SzwYq5ZwMN9)
 
 [Link to deployed site](https://luvthatduck.github.io/Code-Quiz-Challenge/)
